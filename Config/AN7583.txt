@@ -1,6 +1,8 @@
 #设备平台
 CONFIG_TARGET_airoha=y
 CONFIG_TARGET_airoha_an7583=y
-#设备列表
+#设备列表（与 pbs05/ponwrt master target/linux/airoha/image/an7583.mk 的 TARGET_DEVICES 逐一对齐，共4个）
 CONFIG_TARGET_DEVICE_airoha_an7583_DEVICE_airoha_an7583-evb=y
 CONFIG_TARGET_DEVICE_airoha_an7583_DEVICE_airoha_an7583-evb-emmc=y
+CONFIG_TARGET_DEVICE_airoha_an7583_DEVICE_nokia_xg-040g-mf=y
+CONFIG_TARGET_DEVICE_airoha_an7583_DEVICE_nokia_xg-040g-mf-ubi=y

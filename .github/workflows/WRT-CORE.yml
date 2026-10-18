@@ -79,6 +79,10 @@ jobs:
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
+          # 释放Runner预装大件占用的空间（与pbs05/ponwrt官方CI同款操作）
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc
+          sudo apt-get clean
+
           sudo -E apt -yqq purge firefox
           sudo -E apt -yqq update
           sudo -E apt -yqq full-upgrade
@@ -129,11 +133,7 @@ jobs:
           echo "WRT_CACHE_KEY=$WRT_CACHE_PREFIX-$WRT_HASH" >> $GITHUB_ENV
           echo "cache_key=$WRT_CACHE_PREFIX-$WRT_HASH" >> "$GITHUB_OUTPUT"
 
-          # 如果不存在 defconfig 则直接结束工作流
-          if [ ! -d "defconfig" ]; then
-            echo "defconfig directory not found, stopping workflow."
-            exit 0
-          fi
+          # pbs05/ponwrt 无 defconfig 目录，构建由本仓库 Config/*.txt 驱动，此处不提前结束
 
           # GitHub Action 移除国内下载源
           PROJECT_MIRRORS_FILE="./scripts/projectsmirrors.json"

@@ -18,14 +18,13 @@ on:
           - AN7583
           - TEST
       SOURCE:
-        default: 'chasey-dev/immortalwrt-mt798x-rebase'
+        default: 'pbs05/ponwrt'
         required: true
         type: choice
         options:
-         - Yuzhii0718/immortalwrt-mt798x-6.6-padavanonly
-         - chasey-dev/immortalwrt-mt798x-rebase
+         - pbs05/ponwrt
       BRANCH:
-        default: '25.12'
+        default: 'master'
         required: true
         type: string
       PACKAGE:

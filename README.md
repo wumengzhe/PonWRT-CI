@@ -12,23 +12,20 @@ https://github.com/VIKINGYFY/packages.git
 
 # PonWRT-CI
 
-云编译 AN758X（Airoha AN7581 / AN7583）OpenWrt 固件。
+云编译 AN758X（Airoha AN7581 / AN7583）PON 固件，源码为 pbs05/ponwrt（ImmortalWrt 6.18 内核 + PON 驱动 feeds）。
 
 源码：
 
-https://github.com/Yuzhii0718/immortalwrt-mt798x-6.6-padavanonly.git
-
-https://github.com/chasey-dev/immortalwrt-mt798x-rebase.git
+https://github.com/pbs05/ponwrt.git
 
 # 编译矩阵
 
 | 配置 | 源码 | 分支 | 子目标 | 设备 |
 | --- | --- | --- | --- | --- |
-| AN7581 | Yuzhii0718/immortalwrt-mt798x-6.6-padavanonly | openwrt-24.10-6.6 | airoha/an7581 | airoha_an7581-evb、airoha_an7581-evb-emmc |
-| AN7581 | chasey-dev/immortalwrt-mt798x-rebase | 25.12 | airoha/an7581 | airoha_an7581-evb、airoha_an7581-evb-emmc |
-| AN7583 | chasey-dev/immortalwrt-mt798x-rebase | 25.12 | airoha/an7583 | airoha_an7583-evb、airoha_an7583-evb-emmc |
+| AN7581 | pbs05/ponwrt | master | airoha/an7581 | an7581.mk 全部 19 个设备（EVB×3、Gemtek×2、Nokia Valyrian、Fiberhome HG5382A/HG5585F 系列×4、ZNXT×2、UnionMan、H3C、Nokia XG-040G-MD/MD-USB-SFP/TF、Quantum Q1000K） |
+| AN7583 | pbs05/ponwrt | master | airoha/an7583 | an7583.mk 全部 4 个设备（EVB×2、Nokia XG-040G-MF/MF-UBI） |
 
-即 CloseWRT-CI 两个源码仓中全部 AN758X 子目标的全部设备。
+即 pbs05/ponwrt 全部 AN758X 子目标的全部设备。PON 相关包（kmod-airoha-xpon、kmod-airoha-en7572、airoha-ponctl、airoha-pond 等）随设备 DEVICE_PACKAGES 自动编入，无需额外勾选。
 
 # 注意
 

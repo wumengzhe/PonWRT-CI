@@ -22,7 +22,9 @@ CONFIG_CCACHE=y  #编译缓存（编译加速，**必须保留**，不影响固�
 CONFIG_FEED_video=n
 CONFIG_TARGET_MULTI_PROFILE=y
 CONFIG_TARGET_PER_DEVICE_ROOTFS=y
-CONFIG_TARGET_ROOTFS_INITRAMFS=n
+CONFIG_TARGET_ROOTFS_INITRAMFS=y  # 保留initramfs/recovery镜像（Nokia XG-040G-MD/MF 的 recovery.itb 依赖它，pbs05官方config同款）
+CONFIG_USE_APK=y                   # pbs05/ponwrt 官方 config 启用 APK 包管理（immortalwrt 25.12代际）
+CONFIG_PACKAGE_apk-openssl=y       # APK 工具链 openssl 变体，与 pbs05 官方 config 一致
 #内核调整
 CONFIG_PACKAGE_kmod-ata-ahci=n   # SATA硬盘驱动，无SATA硬盘 → 禁用
 CONFIG_PACKAGE_kmod-ata-core=n   # SATA基础驱动，无SATA硬盘 → 禁用
@@ -38,7 +40,9 @@ CONFIG_PACKAGE_kmod-mtd-rw=y      # 闪存读写权限，路由必备 → 保留
 CONFIG_PACKAGE_kmod-netlink-diag=n   # 网络链路诊断，无用 → 禁用
 CONFIG_PACKAGE_kmod-nf-nat6=y
 CONFIG_PACKAGE_kmod-nf-flow=y      # 内核流表卸载，硬件加速辅助 → 保留
+CONFIG_PACKAGE_kmod-nf-conntrack-bridge=y  # 桥接conntrack，pbs05 release.config 对齐项 → 保留
 CONFIG_PACKAGE_kmod-sched-core=y   # 流表调度核心，配合nf-flow → 保留
+CONFIG_PACKAGE_kmod-sched-cake=y   # CAKE队列调度，PON上行整形刚需，pbs05 release.config 对齐项 → 保留
 CONFIG_PACKAGE_kmod-tcp-bbr=y      # BBR拥塞控制，提速刚需 → 保留
 
 # 下面一整段 nftables 扩展模块
@@ -51,7 +55,7 @@ CONFIG_PACKAGE_kmod-nft-fib=n
 CONFIG_PACKAGE_kmod-nft-fullcone=y  # 全锥NAT，游戏/P2P刚需 → 保留
 CONFIG_PACKAGE_kmod-nft-nat=y       # 基础NAT，必备 → 保留
 CONFIG_PACKAGE_kmod-nft-netdev=n
-CONFIG_PACKAGE_kmod-nft-offload=n
+CONFIG_PACKAGE_kmod-nft-offload=y  # nftables硬件卸载，pbs05 release.config 对齐项 → 保留
 CONFIG_PACKAGE_kmod-nft-queue=n
 CONFIG_PACKAGE_kmod-nft-socket=n
 CONFIG_PACKAGE_kmod-nft-tproxy=y  #提供 透明代理（TPROXY） 功能,路由代理则需要
@@ -93,6 +97,7 @@ CONFIG_PACKAGE_kmod-wireguard=y
 #组件调整
 CONFIG_PACKAGE_autocore=y  # 系统核心调度，保留
 CONFIG_PACKAGE_automount=y # 自动挂载，不用外接盘可禁用
+CONFIG_PACKAGE_mount-utils=y  # mount/umount 用户态工具，pbs05 release.config 对齐项 → 保留
 CONFIG_PACKAGE_blkid=y     # 磁盘识别，无硬盘禁用
 CONFIG_PACKAGE_ca-certificates=y
 CONFIG_PACKAGE_cfdisk=n  # 分区工具 → 禁用
