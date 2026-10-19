@@ -11,7 +11,7 @@ CONFIG_PACKAGE_luci-app-gecoosac=y      #网速监控/状态展示
 CONFIG_PACKAGE_luci-app-mini-diskmanager=y #简易磁盘管理，不折腾外接存储就注释禁用。
 CONFIG_PACKAGE_luci-app-partexp=n      #分区扩展/挂载管理
 CONFIG_PACKAGE_luci-app-samba4=n        #Samba文件共享
-CONFIG_PACKAGE_luci-app-upnp=n          # UPnP端口映射：immortalwrt/packages 于2026-10-05把miniupnpd bump到2.3.11但未刷新020-descr-filter-fix.patch（2025-07-31），开启即patch失败构建中断；pbs05/ponwrt官方release config同样未启用（an7581.config为"# CONFIG_PACKAGE_luci-app-upnp is not set"），故关闭。待feed修复后可改回=y
+CONFIG_PACKAGE_luci-app-upnp=y          # UPnP端口映射：miniupnpd 2.3.11 的三个feed补丁对上游冗余/失效（020/030已上游合并、040过期），由Scripts/FeedFixes.sh在CI侧版本门控移除后即可正常构建
 CONFIG_PACKAGE_luci-app-wolultra=n       #增强版网络唤醒
 #删除插件
 CONFIG_PACKAGE_luci-app-attendedsysupgrade=n
