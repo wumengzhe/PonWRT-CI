@@ -38,4 +38,28 @@ fix_miniupnpd() {
 	done
 }
 
+# an7581-evb-multievb 的 DEVICE_PACKAGES 引用了一个「有定义但不会生成」的 kmod。
+# 背景（2026-11-09 run#8）：上游 target/linux/airoha/image/an7581.mk 给该 profile 写了
+# kmod-sound-soc-an7581-wm8960。package/kernel/linux/modules/sound.mk:290 虽有对应的
+# KernelPackage 定义，但它带 $(call AddDepends/sound) 与 +kmod-sound-soc-an7581
+# 等依赖，依赖链未闭合，包不会进 packages.adb；开启该 profile 后 per-device rootfs
+# 阶段 apk 实测报 "no such package"，target/linux/install 整体失败，
+# 16 台 AN7581 实机固件连带全部不出件（AN7583 的 EVB 依赖简单，已全绿）。
+# 官方 configs/an7581.config 默认不开 evb-multievb，所以上游 CI 从未走过这条链。
+# 处理：EVB 声卡驱动对公版评估板非必需，编译前把这个词从 DEVICE_PACKAGES 摘掉。
+# 无条件摘除是有意为之——包「有定义」不等于「能安装」，不能用源码定义做门控；
+# 幂等，上游若日后修好依赖链可直接删除本函数。
+fix_an7581_evb_packages() {
+	local MK="./target/linux/airoha/image/an7581.mk"
+	[ -f "$MK" ] || return 0
+
+	if grep -q 'kmod-sound-soc-an7581-wm8960' "$MK"; then
+		sed -i 's/ kmod-sound-soc-an7581-wm8960//g' "$MK"
+		echo "FeedFixes: an7581-evb-multievb 摘除无法生成的 kmod-sound-soc-an7581-wm8960"
+	else
+		echo "FeedFixes: an7581-evb-multievb 已无 wm8960（幂等）"
+	fi
+}
+
 fix_miniupnpd
+fix_an7581_evb_packages
