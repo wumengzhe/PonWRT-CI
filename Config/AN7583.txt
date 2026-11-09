@@ -1,8 +1,10 @@
 #设备平台
 CONFIG_TARGET_airoha=y
 CONFIG_TARGET_airoha_an7583=y
-#设备列表（与 pbs05/ponwrt master target/linux/airoha/image/an7583.mk 的 TARGET_DEVICES 逐一对齐，共4个）
-CONFIG_TARGET_DEVICE_airoha_an7583_DEVICE_airoha_an7583-evb=y
-CONFIG_TARGET_DEVICE_airoha_an7583_DEVICE_airoha_an7583-evb-emmc=y
+#设备列表（与 pbs05/ponwrt master target/linux/airoha/image/an7583.mk 的 TARGET_DEVICES 逐一对齐，共3个）
+#上游已把 2 个旧 evb（an7583-evb / -evb-emmc）合并成单个 airoha_an7583-evb-multievb
+#（DEVICE_DTS_OVERLAY 携带两套 overlay）。旧符号已被 kconfig 静默丢弃，
+#此前该平台只出 Nokia 机型，换成新符号后 EVB 才会真正编出来。
+CONFIG_TARGET_DEVICE_airoha_an7583_DEVICE_airoha_an7583-evb-multievb=y
 CONFIG_TARGET_DEVICE_airoha_an7583_DEVICE_nokia_xg-040g-mf=y
 CONFIG_TARGET_DEVICE_airoha_an7583_DEVICE_nokia_xg-040g-mf-ubi=y
