@@ -1,13 +1,13 @@
 #设备平台
 CONFIG_TARGET_airoha=y
 CONFIG_TARGET_airoha_an7581=y
-#设备列表（与 pbs05/ponwrt master target/linux/airoha/image/an7581.mk 的 TARGET_DEVICES 逐一对齐，共17个）
-#上游已把 3 个旧 evb（an7581-evb / -evb-emmc-eagle / -evb-emmc-kite）合并成单个
-#airoha_an7581-evb-multievb（DEVICE_DTS_OVERLAY 携带三套 overlay）。旧符号在 kconfig 中已不存在，
-#make defconfig 会静默丢弃，所以此前这三个机型一直没出件；换成新符号才会真正编出来。
-#该 profile 会连带选中 u-boot an7581_rfb 与 trusted-firmware-a an7581-bl2/bl31
-#（uboot-airoha、arm-trusted-firmware-airoha 的 BUILD_DEVICES 均已指向它），依赖链闭合。
-CONFIG_TARGET_DEVICE_airoha_an7581_DEVICE_airoha_an7581-evb-multievb=y
+#设备列表（与 pbs05/ponwrt master target/linux/airoha/image/an7581.mk 的 TARGET_DEVICES 逐一对齐）
+#本文件只放 16 台实机 profile；公版评估板 airoha_an7581-evb-multievb 已拆到
+#Config/AN7581-EVB.txt 由独立 job 编译（见 PWRT-ALL.yml matrix）。
+#原因：CONFIG_TARGET_PER_DEVICE_ROOTFS=y 时，同一 subtarget 内任一 device 的包缺失
+#会让 target/linux/install 整体失败。run#8 即因 EVB 的
+#kmod-sound-soc-an7581-wm8960 无法生成，把 16 台实机固件全部拖垮。
+#拆分后，EVB 侧再出包依赖问题也只影响那一个 job，实机固件不受牵连。
 CONFIG_TARGET_DEVICE_airoha_an7581_DEVICE_gemtek_w1700k-ubi=y
 CONFIG_TARGET_DEVICE_airoha_an7581_DEVICE_gemtek_xg2010g=y
 CONFIG_TARGET_DEVICE_airoha_an7581_DEVICE_nokia_valyrian=y

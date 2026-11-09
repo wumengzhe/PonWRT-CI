@@ -50,7 +50,11 @@ jobs:
       fail-fast: false
       #max-parallel: 4
       matrix:
-        CONFIG: [AN7581, AN7583]
+        # AN7581-EVB 为公版评估板独立 job：其 DEVICE_PACKAGES 曾引入无法生成的
+        # kmod-sound-soc-an7581-wm8960，在 PER_DEVICE_ROOTFS 下会拖垮整个
+        # subtarget 的 install，导致 16 台 AN7581 实机固件全部不出件。
+        # 拆开后 EVB 侧失败不影响实机；热修见 Scripts/FeedFixes.sh。
+        CONFIG: [AN7581, AN7583, AN7581-EVB]
         REPO_INFO:
           - {SOURCE: "pbs05/ponwrt", BRANCH: "master"}
 

@@ -1,0 +1,13 @@
+#设备平台
+CONFIG_TARGET_airoha=y
+CONFIG_TARGET_airoha_an7581=y
+#AN7581 公版评估板独立编译 job（PWRT-ALL.yml matrix: AN7581-EVB）
+#上游把 3 个旧 evb（an7581-evb / -evb-emmc-eagle / -evb-emmc-kite）合并成
+#单个 airoha_an7581-evb-multievb（DEVICE_DTS_OVERLAY 携带三套 overlay）。
+#旧符号已从 kconfig 移除，make defconfig 静默丢弃，必须用新符号。
+#该 profile 连带选中 u-boot an7581_rfb 与 ATF an7581-bl2/bl31
+#（uboot-airoha、arm-trusted-firmware-airoha 的 BUILD_DEVICES 均已指向它）。
+#注意：EVB 的 DEVICE_PACKAGES 含上游无法生成的 kmod-sound-soc-an7581-wm8960，
+#Scripts/FeedFixes.sh 的 fix_an7581_evb_packages() 会在编译前无条件摘除。
+#独立 job 的目的是隔离风险：即使该 profile 再出包依赖问题，也不拖累 16 台实机。
+CONFIG_TARGET_DEVICE_airoha_an7581_DEVICE_airoha_an7581-evb-multievb=y
